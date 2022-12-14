@@ -1,11 +1,18 @@
 import { doubleAuction } from './doubleAuction';
 import {
+  SmartContract,
+  method,
+  Bool,
+  State,
+  state,
+  Experimental,
   isReady,
   shutdown,
   Field,
   Mina,
   PrivateKey,
   PublicKey,
+  Poseidon
   AccountUpdate,
 } from 'snarkyjs';
 
@@ -22,12 +29,19 @@ import {
 let Local = Mina.LocalBlockchain();
 Mina.setActiveInstance(Local);
 
+// Local.testAccounts is an array of 10 test accounts that have been pre-filled with Mina
+let feePayer = Local.testAccounts[0].privateKey;
+
+// zkapp account
+let zkAppPrivateKey = PrivateKey.random();
+let zkAppAddress = zkAppPrivateKey.toPublicKey();
+let zkAppInstance = new Add(zkAppAddress);
+
+
+
 describe('doubleAuction', () => {
   let
-    deployerAccount: PrivateKey,
-    zkAppAddress: PublicKey,
-    zkAppPrivateKey: PrivateKey,
-    zkAppInstance: doubleAuction,
+    deployerAccount: zkAppPrivateKey,
     zkApp: doubleAuction,
     txn;
 
@@ -47,7 +61,7 @@ describe('doubleAuction', () => {
 
         // deploy zkapp
         txn = await Mina.transaction(deployerAccount, () => {
-          //zkApp.fundNewAccount(deployerAccount);
+          AccountUpdate.fundNewAccount(deployerAccount);
           zkAppInstance.deploy({ zkappKey: zkAppPrivateKey });
         });
         await txn.send();
@@ -96,5 +110,6 @@ describe('doubleAuction', () => {
 
   });
 
-
+ 
 });
+
