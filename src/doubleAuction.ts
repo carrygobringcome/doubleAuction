@@ -12,8 +12,10 @@ import {
   PublicKey,
 } from 'snarkyjs';
 
+// check what this should be export { deploy, submitSolution, getZkAppState, createLocalBlockchain };
+// or export { isReady, Field, Encoding };
 
-export { isReady };
+export { isReady};
 
 await isReady;
 
@@ -90,8 +92,18 @@ export class doubleAuction extends SmartContract {
 
 
     // generate flash price
+    // this would have to be input via the ui - start here, then console then ui
+    // default bid ask for example
+ // hash offchain
+ //   this.registeredBidder1Price.set(Poseidon.hash(Bid1));
 
 
+    //  this.user2.set(users['SuperBob'].toPublicKey());
+    //  this.user3.set(users['MegaBob'].toPublicKey());
+    // this.message.set(Field(0));
+    //  this.messageHistoryHash.set(Field(0));
+
+    // generate ask and bids?
 }
 
 
